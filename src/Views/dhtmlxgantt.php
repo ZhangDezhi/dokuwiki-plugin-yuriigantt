@@ -38,7 +38,19 @@ $withTranslation = function () use ($pluginName, $lang, $baseUrl) {
         $lang = $langMap[$lang];
     }
 
-    $langFile = dirname(__DIR__, 2) . "/3rd/dhtmlxgantt/locale/locale_$lang.js";
+    //only php 7.0
+    //$langFile = dirname(__DIR__, 2) . "/3rd/dhtmlxgantt/locale/locale_$lang.js"; 
+
+    //php 7.0 or 5.x
+    function dirname_r($path, $count=1){
+        if ($count > 1){
+           return dirname(dirname_r($path, --$count));
+        }else{
+           return dirname($path);
+        }
+        }
+    $langFile = dirname_r(__DIR__, 2) . "/3rd/dhtmlxgantt/locale/locale_$lang.js";
+
     $langUrl = $baseUrl . "lib/plugins/{$pluginName}/3rd/dhtmlxgantt/locale/locale_$lang.js?v=6.3.5";
 
     if (!file_exists($langFile)) {
